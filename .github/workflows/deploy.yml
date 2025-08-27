@@ -39,9 +39,16 @@ jobs:
           name: build
           path: dist
 
+- name: Setup Git config
+  run: |
+    git config --global user.name "Feybulous"
+    git config --global user.email "fenja@familienese.de"
+
+
       # 6️⃣ Optional: Deployment (GitHub Pages)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+	force_orphan: true
