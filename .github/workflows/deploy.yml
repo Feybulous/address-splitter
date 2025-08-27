@@ -26,8 +26,8 @@ jobs:
 
       - name: Setup Git config
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "Feybulous"
+          git config --global user.email "fenja@familienese.de"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
