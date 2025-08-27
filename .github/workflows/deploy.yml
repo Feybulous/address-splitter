@@ -1,54 +1,37 @@
-name: Build and Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main   # nur auf main-Branch reagieren
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Repository auschecken
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2️⃣ Node 22 installieren
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
 
-      # 3️⃣ Dependencies installieren
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      # 4️⃣ Build
       - name: Build project
         run: npm run build
 
-      # 5️⃣ Optional: Artefakte speichern
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: dist
+      - name: Setup Git config
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-- name: Setup Git config
-  run: |
-    git config --global user.name "Feybulous"
-    git config --global user.email "fenja@familienese.de"
-
-
-      # 6️⃣ Optional: Deployment (GitHub Pages)
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-	force_orphan: true
+          force_orphan: true
