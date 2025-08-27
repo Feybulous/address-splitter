@@ -3,10 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main   # nur auf main-Branch reagieren
+      - main
 
 permissions:
-  contents: write   # wichtig! sonst darf die Action nicht auf gh-pages pushen
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -22,7 +22,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build project
         run: npm run build
@@ -34,3 +34,4 @@ jobs:
           publish_dir: ./dist
           user_name: Feybulous
           user_email: fenja@familienese.de
+          force_orphan: true
