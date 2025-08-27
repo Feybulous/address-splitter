@@ -5,6 +5,9 @@ on:
     branches:
       - main   # nur auf main-Branch reagieren
 
+permissions:
+  contents: write   # wichtig! sonst darf die Action nicht auf gh-pages pushen
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -24,14 +27,10 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Setup Git config
-        run: |
-          git config --global user.name "Feybulous"
-          git config --global user.email "fenja@familienese.de"
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          force_orphan: true
+          user_name: Feybulous
+          user_email: fenja@familienese.de
